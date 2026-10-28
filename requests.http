@@ -1,0 +1,33 @@
+### Requests for the VS Code "REST Client" extension. Start "Serve API on :8080" first,
+### then click "Send Request" above each block.
+
+@base = http://127.0.0.1:8080
+
+### Critical: password reset (send twice -- the Idempotency-Key dedupes it)
+POST {{base}}/v1/notifications
+Content-Type: application/json
+Idempotency-Key: pwreset-user-42
+
+{ "channel": "email", "recipient": "user42@example.com", "subject": "Reset your password",
+  "body": "Click here to reset...", "priority": "critical" }
+
+### Critical SMS to an invalid number (-> FAILED, no retries)
+POST {{base}}/v1/notifications
+Content-Type: application/json
+
+{ "channel": "sms", "recipient": "invalid-number", "body": "Code: 123456", "priority": 1 }
+
+### Batch marketing
+POST {{base}}/v1/notifications/batch
+Content-Type: application/json
+
+{ "notifications": [
+  { "channel": "email", "recipient": "a@example.com", "subject": "Sale", "body": "50% off", "priority": 3 },
+  { "channel": "push",  "recipient": "device-abc",   "body": "Deal of the day", "priority": "marketing" }
+] }
+
+### Status + audit trail (paste an id from a response above)
+GET {{base}}/v1/notifications/REPLACE_WITH_ID
+
+### Stats
+GET {{base}}/v1/stats

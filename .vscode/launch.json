@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Demo: priority routing + retries",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "notifier",
+      "args": ["demo"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Serve API on :8080",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "notifier",
+      "args": ["serve", "--port", "8080", "--db", "notifications.db"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Run all tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "unittest",
+      "args": ["discover", "-s", "tests", "-t", ".", "-v"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}
